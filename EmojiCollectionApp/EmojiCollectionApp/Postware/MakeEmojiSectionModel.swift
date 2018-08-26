@@ -21,6 +21,7 @@ func makeEmojiSectionModel(state: [String:State], action: Action) -> [String:Sta
         let section = DefaultSectionModel(items: emojiBoxModels, header: EmojiSectionHeaderModel(title: "  Emoji Section \(groupIndex)"), footer: nil)
         section.minimumInteritemSpacing = 0
         section.minimumLineSpacing = 2
+        section.inset = UIEdgeInsetsMake(0, 8, 0, 8)
         return section
         
     }

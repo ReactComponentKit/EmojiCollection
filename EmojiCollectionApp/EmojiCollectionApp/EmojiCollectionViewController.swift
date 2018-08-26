@@ -73,7 +73,7 @@ class EmojiCollectionViewController: UIViewController {
         self.view.addSubview(emojiCollectionView)
         
         stackView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(20)
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.left.right.equalToSuperview()
             make.height.equalTo(48)
         }
