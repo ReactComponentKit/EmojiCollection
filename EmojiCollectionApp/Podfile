@@ -7,4 +7,5 @@ target 'EmojiCollectionApp' do
 
   # Pods for EmojiCollectionApp
   pod 'ReactComponentKit'
+  pod 'SnapKit'
 end
