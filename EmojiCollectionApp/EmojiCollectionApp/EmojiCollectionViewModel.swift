@@ -14,7 +14,7 @@ import ReactComponentKit
 class EmojiCollectionViewModel: RootViewModelType {
     
     private var emojiGroupList: [[String]]? = nil
-    let rx_sections =  BehaviorRelay<[DefaultSectionModel]>(value: [])
+    let rx_sections =  BehaviorRelay<[SectionModel]>(value: [])
     
     override init() {
         super.init()
@@ -40,7 +40,7 @@ class EmojiCollectionViewModel: RootViewModelType {
     
     override func on(newState: [String : State]?) {
         emojiGroupList = newState?["emoji"] as? [[String]]
-        guard let sections = newState?["sections"] as? [DefaultSectionModel] else { return }
+        guard let sections = newState?["sections"] as? [SectionModel] else { return }
         rx_sections.accept(sections)
     }
     
