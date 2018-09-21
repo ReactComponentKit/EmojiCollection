@@ -10,9 +10,9 @@ import Foundation
 import BKRedux
 import RxSwift
 
-func emojiReducer(name: String, state: State?) -> (Action) -> Observable<ReducerResult> {
+func emojiReducer<S>(name: StateKeyPath<S>, state: StateValue?) -> (Action) -> Observable<(StateKeyPath<S>, StateValue?)> {
     return { (action) in
-        guard let prevState = state as? [[String]] else { return Observable.just(ReducerResult(name: name, result: [])) }
+        guard let prevState = state as? [[String]] else { return Observable.just((name, result: [])) }
         
         var newState = prevState
         
@@ -30,6 +30,6 @@ func emojiReducer(name: String, state: State?) -> (Action) -> Observable<Reducer
             break
         }
         
-        return Observable.just(ReducerResult(name: name, result: newState))
+        return Observable.just((name, newState))
     }
 }

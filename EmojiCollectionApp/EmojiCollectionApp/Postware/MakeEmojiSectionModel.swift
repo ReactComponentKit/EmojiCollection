@@ -6,12 +6,14 @@
 //  Copyright © 2018년 Burt.K. All rights reserved.
 //
 
+import RxSwift
 import BKRedux
 import ReactComponentKit
 
-func makeEmojiSectionModel(state: [String:State], action: Action) -> [String:State] {
-    guard let emojiGroupList = state["emoji"] as? [[String]] else { return state }
+func makeEmojiSectionModel(state: State, action: Action) -> Observable<State> {
+    guard let emojiCollectionState = state as? EmojiCollectionState else { return .just(state) }
     
+    let emojiGroupList = emojiCollectionState.emoji
     let sections = emojiGroupList.enumerated().map { (groupIndex, emojiGroup) -> DefaultSectionModel in
         
         let emojiBoxModels = emojiGroup.map({ (emoji) -> EmojiBoxModel in
@@ -26,7 +28,7 @@ func makeEmojiSectionModel(state: [String:State], action: Action) -> [String:Sta
         
     }
     
-    var newState = state
-    newState["sections"] = sections
-    return newState
+    var newState = emojiCollectionState
+    newState.sections = sections
+    return .just(newState)
 }

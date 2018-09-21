@@ -11,7 +11,13 @@ import RxCocoa
 import BKRedux
 import ReactComponentKit
 
-class EmojiCollectionViewModel: RootViewModelType {
+struct EmojiCollectionState: State {
+    var emoji: [[String]] = [[], [], []]
+    var sections: [SectionModel] = []
+    var error: (Error, Action)? = nil
+}
+
+class EmojiCollectionViewModel: RootViewModelType<EmojiCollectionState> {
     
     private var emojiGroupList: [[String]]? = nil
     let rx_sections =  BehaviorRelay<[SectionModel]>(value: [])
@@ -20,28 +26,21 @@ class EmojiCollectionViewModel: RootViewModelType {
         super.init()
         
         store.set(
-            state: [
-                "emoji": [
-                    [String](),
-                    [String](),
-                    [String]()
-                ]
-            ],
-            reducers: [
-                "emoji": emojiReducer
-            ],
+            initailState: EmojiCollectionState(),
             middlewares: [
                 logToConsole
+            ],
+            reducers: [
+                StateKeyPath(\EmojiCollectionState.emoji): emojiReducer
             ],
             postwares: [
                 makeEmojiSectionModel
             ])
     }
     
-    override func on(newState: [String : State]?) {
-        emojiGroupList = newState?["emoji"] as? [[String]]
-        guard let sections = newState?["sections"] as? [SectionModel] else { return }
-        rx_sections.accept(sections)
+    override func on(newState: EmojiCollectionState) {
+        emojiGroupList = newState.emoji
+        rx_sections.accept(newState.sections)
     }
     
     func randomIndexToDelete(at section: Int) -> Int? {
