@@ -23,7 +23,7 @@ func makeEmojiSectionModel(state: State, action: Action) -> Observable<State> {
         let section = DefaultSectionModel(items: emojiBoxModels, header: EmojiSectionHeaderModel(title: "  Emoji Section \(groupIndex)"), footer: nil)
         section.minimumInteritemSpacing = 0
         section.minimumLineSpacing = 2
-        section.inset = UIEdgeInsetsMake(0, 8, 0, 8)
+        section.inset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         return section
         
     }
