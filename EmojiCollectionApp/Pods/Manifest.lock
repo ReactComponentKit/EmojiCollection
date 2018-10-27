@@ -1,6 +1,6 @@
 PODS:
   - BKEventBus (1.0.8)
-  - BKRedux (1.0.2):
+  - BKRedux (1.1.0):
     - RxCocoa (>= 4.2.0)
     - RxSwift (>= 4.2.0)
   - ReactComponentKit (0.3.2):
@@ -11,7 +11,7 @@ PODS:
   - RxCocoa (4.3.1):
     - RxSwift (~> 4.0)
   - RxSwift (4.3.1)
-  - SnapKit (4.0.1)
+  - SnapKit (4.2.0)
 
 DEPENDENCIES:
   - ReactComponentKit
@@ -28,11 +28,11 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   BKEventBus: b6ec629c0581c98a9c798f930aadd92b751a3f6b
-  BKRedux: 41c7637061babc0ee1ac5f5121db9d302e786d79
+  BKRedux: 1cd8225d6f74b61a76209bed5f88a7773e401f93
   ReactComponentKit: 8c4c235340f18c3d665fb3450899ca2eba945e9a
   RxCocoa: 78763c7b07d02455598d9fc3c1ad091a28b73635
   RxSwift: fe0fd770a43acdb7d0a53da411c9b892e69bb6e4
-  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
 PODFILE CHECKSUM: 84b3ce23799134d884fbfe7551d6444ce30885d5
 
