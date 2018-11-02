@@ -26,7 +26,7 @@ class EmojiCollectionViewModel: RootViewModelType<EmojiCollectionState> {
         super.init()
         
         store.set(
-            initailState: EmojiCollectionState(),
+            initialState: EmojiCollectionState(),
             middlewares: [
                 logToConsole
             ],
