@@ -8,7 +8,11 @@
 
 import ReactComponentKit
 
-struct EmojiSectionHeaderModel: SectionHeaderModel {
+struct EmojiSectionHeaderModel: ItemModel {
+    
+    var id: Int {
+        return title.hashValue
+    }
     
     var componentClass: UIViewComponent.Type {
         return EmojiSectionHeaderComponent.self
