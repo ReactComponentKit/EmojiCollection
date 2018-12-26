@@ -10,26 +10,22 @@ import Foundation
 import BKRedux
 import RxSwift
 
-func emojiReducer<S>(name: StateKeyPath<S>, state: StateValue?) -> (Action) -> Observable<(StateKeyPath<S>, StateValue?)> {
-    return { (action) in
-        guard let prevState = state as? [[String]] else { return Observable.just((name, result: [])) }
-        
-        var newState = prevState
-        
-        switch action {
-        case let addEmoji as AddEmojiAction:
-            newState[addEmoji.section].append(addEmoji.emoji)
-        case let removeEmoji as RemoveEmojiAction:
-            newState[removeEmoji.section].remove(at: removeEmoji.index)
-        case is ShuffleEmojiAction:
-            for (index, var section) in prevState.enumerated() {
-                section.shuffle()
-                newState[index] = section
-            }
-        default:
-            break
+func emojiReducer(state: State, action: Action) -> Observable<State> {
+    guard var mutableState = state as? EmojiCollectionState else { return .just(state) }
+    
+    switch action {
+    case let act as AddEmojiAction:
+        mutableState.emoji[act.section].append(act.emoji)
+    case let act as RemoveEmojiAction:
+        mutableState.emoji[act.section].remove(at: act.index)
+    case is ShuffleEmojiAction:
+        for (index, var section) in mutableState.emoji.enumerated() {
+            section.shuffle()
+            mutableState.emoji[index] = section
         }
-        
-        return Observable.just((name, newState))
+    default:
+        break
     }
+    
+    return .just(mutableState)
 }

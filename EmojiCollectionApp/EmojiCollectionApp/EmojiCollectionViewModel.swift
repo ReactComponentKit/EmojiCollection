@@ -31,7 +31,7 @@ class EmojiCollectionViewModel: RootViewModelType<EmojiCollectionState> {
                 logToConsole
             ],
             reducers: [
-                StateKeyPath(\EmojiCollectionState.emoji): emojiReducer
+                emojiReducer
             ],
             postwares: [
                 makeEmojiSectionModel
