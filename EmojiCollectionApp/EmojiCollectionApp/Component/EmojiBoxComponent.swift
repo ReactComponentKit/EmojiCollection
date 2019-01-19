@@ -26,7 +26,7 @@ class EmojiBoxComponent: UIViewComponent {
         }
     }
     
-    override func configure<Item>(item: Item) {
+    override func configure<Item>(item: Item, at indexPath: IndexPath) {
         guard let emojiModel = item as? EmojiBoxModel else { return }
         label.text = emojiModel.emoji
     }

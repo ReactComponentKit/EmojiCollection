@@ -28,7 +28,7 @@ class EmojiSectionHeaderComponent: UIViewComponent {
         }
     }
     
-    override func configure<Item>(item: Item) {
+    override func configure<Item>(item: Item, at indexPath: IndexPath) {
         guard let headerModel = item as? EmojiSectionHeaderModel else { return }
         self.titleLabel.text = headerModel.title
     }
