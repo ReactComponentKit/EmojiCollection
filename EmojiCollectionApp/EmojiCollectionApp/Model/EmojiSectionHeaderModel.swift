@@ -8,10 +8,14 @@
 
 import ReactComponentKit
 
-struct EmojiSectionHeaderModel: ItemModel {
+struct EmojiSectionHeaderModel: ItemModel, Hashable {
     
     var id: Int {
-        return title.hashValue
+        return self.hashValue
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
     }
     
     var componentClass: UIViewComponent.Type {

@@ -8,10 +8,14 @@
 
 import ReactComponentKit
 
-struct EmojiBoxModel: ItemModel {
+struct EmojiBoxModel: ItemModel, Hashable {
     
     var id: Int {
-        return emoji.hashValue
+        return self.hashValue
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(emoji)
     }
     
     var componentClass: UIViewComponent.Type {
