@@ -27,13 +27,9 @@ class EmojiCollectionViewModel: RootViewModelType<EmojiCollectionState> {
         
         store.set(
             initialState: EmojiCollectionState(),
-            middlewares: [
-                logToConsole
-            ],
             reducers: [
-                emojiReducer
-            ],
-            postwares: [
+                logToConsole,
+                emojiReducer,
                 makeEmojiSectionModel
             ])
     }

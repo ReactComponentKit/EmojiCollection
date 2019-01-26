@@ -94,9 +94,7 @@
 				4E22F3FB2132A45A00F66926 /* Extension */,
 				4E22F3F82132A0FD00F66926 /* EmojiHelper */,
 				4E22F3E621329CD300F66926 /* Action */,
-				4E7ABCF72132CAFC00DD508B /* Middleware */,
 				4E22F3E721329CD700F66926 /* Reducer */,
-				4E7ABCF42132AEC700DD508B /* Postware */,
 				4E22F3E521329CCC00F66926 /* Component */,
 				4E22F3FE2132A5DF00F66926 /* Model */,
 				4E22F3D321329B9D00F66926 /* AppDelegate.swift */,
@@ -133,7 +131,9 @@
 		4E22F3E721329CD700F66926 /* Reducer */ = {
 			isa = PBXGroup;
 			children = (
+				4E7ABCF82132CB3600DD508B /* LogToConsole.swift */,
 				4E22F3EA21329E0800F66926 /* EmojiReducer.swift */,
+				4E7ABCF52132AEFC00DD508B /* MakeEmojiSectionModel.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";
@@ -162,22 +162,6 @@
 				4E7ABCF22132A81100DD508B /* EmojiBoxModel.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		4E7ABCF42132AEC700DD508B /* Postware */ = {
-			isa = PBXGroup;
-			children = (
-				4E7ABCF52132AEFC00DD508B /* MakeEmojiSectionModel.swift */,
-			);
-			path = Postware;
-			sourceTree = "<group>";
-		};
-		4E7ABCF72132CAFC00DD508B /* Middleware */ = {
-			isa = PBXGroup;
-			children = (
-				4E7ABCF82132CB3600DD508B /* LogToConsole.swift */,
-			);
-			path = Middleware;
 			sourceTree = "<group>";
 		};
 		8C6935F18AB37FE0E374E396 /* Frameworks */ = {
