@@ -13,14 +13,14 @@ import ReactComponentKit
 
 struct EmojiCollectionState: State {
     var emoji: [[String]] = [[], [], []]
-    var sections: [SectionModel] = []
+    var sections: [DefaultSectionModel] = []
     var error: (Error, Action)? = nil
 }
 
 class EmojiCollectionViewModel: RootViewModelType<EmojiCollectionState> {
     
     private var emojiGroupList: [[String]]? = nil
-    let rx_sections =  BehaviorRelay<[SectionModel]>(value: [])
+    let sections =  Output<[DefaultSectionModel]>(value: [])
     
     override init() {
         super.init()
@@ -36,7 +36,7 @@ class EmojiCollectionViewModel: RootViewModelType<EmojiCollectionState> {
     
     override func on(newState: EmojiCollectionState) {
         emojiGroupList = newState.emoji
-        rx_sections.accept(newState.sections)
+        sections.accept(newState.sections)
     }
     
     func randomIndexToDelete(at section: Int) -> Int? {
