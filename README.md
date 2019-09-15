@@ -16,6 +16,187 @@ ReactComponentKit provides easy way to update UICollectionView and UITableView. 
 
 ![](art/video.gif)
 
+## How to getting start?
+
+### Define Actions
+
+We'll defien three actions for our emoji collection app. AddEmojiAction, RemoveEmojiAction and ShuffleEmojiAction.
+
+#### AddEmojiAction
+
+```swift
+struct AddEmojiAction: Action {
+    let section: Int
+    let emoji: String
+}
+```
+
+#### RemoveEmojiAction
+
+```swift
+struct RemoveEmojiAction: Action {
+    let section: Int
+    let index: Int
+}
+```
+
+#### ShuffleEmojiAction
+
+```swift
+struct ShuffleEmojiAction: Action {   
+}
+```
+
+### Define Reducers
+
+We need three reducers to mutate our state. There is no when statement and type castring for actions. it is just a pure functions.
+
+#### addEmoji
+
+```swift
+func addEmoji(state: EmojiCollectionState, action: AddEmojiAction) -> EmojiCollectionState {
+    return state.copy {
+        $0.emoji[action.section].append(action.emoji)
+    }
+}
+```
+
+#### removeEmoji
+
+```swift
+func removeEmoji(state: EmojiCollectionState, action: RemoveEmojiAction) -> EmojiCollectionState {
+    return state.copy {
+        $0.emoji[action.section].remove(at: action.index)
+    }
+}
+```
+
+#### shuffleEmoji
+
+```swift
+func shuffleEmoji(state: EmojiCollectionState, action: ShuffleEmojiAction) -> EmojiCollectionState {
+    return state.copy {
+        for (index, var section) in $0.emoji.enumerated() {
+            section.shuffle()
+            $0.emoji[index] = section
+        }
+    }
+}
+```
+
+#### makeCollectionViewSectionModels
+
+It is needed for our collection view. UICollectionView in ReactComponentKit is built up on the models for items and sections.
+
+```swift
+func makeCollectionViewSectionModels(state: EmojiCollectionState) -> EmojiCollectionState {
+    let emojiGroupList = state.emoji
+    let sections = emojiGroupList.enumerated().map { (groupIndex, emojiGroup) -> DefaultSectionModel in
+        
+        let emojiBoxModels = emojiGroup.map({ (emoji) -> EmojiBoxModel in
+            EmojiBoxModel(emoji: emoji)
+        })
+        
+        let section = DefaultSectionModel(items: emojiBoxModels, header: EmojiSectionHeaderModel(title: "  Emoji Section \(groupIndex)"), footer: nil)
+        section.minimumInteritemSpacing = 0
+        section.minimumLineSpacing = 2
+        section.inset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        return section
+        
+    }
+    
+    return state.copy { $0.sections = sections }
+}
+```
+
+### Define ViewModel and Action Flows
+
+We need to define ViewModel and in there we should setup store and define action flows.
+
+#### Set up store and define action flows
+
+We can define action flows in initStore block. We couldn't access the store directly so we should access it with initStore method.
+
+```swift
+override func setupStore() {
+    initStore { store in
+        store.initial(state: EmojiCollectionState())
+        store.beforeActionFlow(logAction)
+        
+        store.flow(action: AddEmojiAction.self)
+            .flow(
+                addEmoji,
+                { state, _ in makeCollectionViewSectionModels(state: state) }
+            )
+        
+        store.flow(action: RemoveEmojiAction.self)
+            .flow(
+                removeEmoji,
+                { state, _ in makeCollectionViewSectionModels(state: state) }
+            )
+        
+        store.flow(action: ShuffleEmojiAction.self)
+            .flow(
+                shuffleEmoji,
+                { state, _ in makeCollectionViewSectionModels(state: state) }
+            )
+        }
+}
+```
+
+#### Define ViewModel
+
+```swift
+struct EmojiCollectionState: State {
+    var emoji: [[String]] = [[], [], []]
+    var sections: [DefaultSectionModel] = []
+    var error: RCKError? = nil
+}
+
+class EmojiCollectionViewModel: RCKViewModel<EmojiCollectionState> {
+    
+    private var emojiGroupList: [[String]]? = nil
+    let sections =  Output<[DefaultSectionModel]>(value: [])
+        
+    override func setupStore() {
+        initStore { store in
+            store.initial(state: EmojiCollectionState())
+            store.beforeActionFlow(logAction)
+            
+            store.flow(action: AddEmojiAction.self)
+                .flow(
+                    addEmoji,
+                    { state, _ in makeCollectionViewSectionModels(state: state) }
+                )
+            
+            store.flow(action: RemoveEmojiAction.self)
+                .flow(
+                    removeEmoji,
+                    { state, _ in makeCollectionViewSectionModels(state: state) }
+                )
+            
+            store.flow(action: ShuffleEmojiAction.self)
+                .flow(
+                    shuffleEmoji,
+                    { state, _ in makeCollectionViewSectionModels(state: state) }
+                )
+            }
+    }
+    
+    override func on(newState: EmojiCollectionState) {
+        emojiGroupList = newState.emoji
+        sections.accept(newState.sections)
+    }
+    
+    func randomIndexToDelete(at section: Int) -> Int? {
+        guard let emojiGroupList = emojiGroupList else { return nil }
+        guard emojiGroupList[section].count > 0 else { return nil }
+        return Int(arc4random()) % emojiGroupList[section].count
+    }
+}
+```
+
+
 ## MIT License
 
 The MIT License
