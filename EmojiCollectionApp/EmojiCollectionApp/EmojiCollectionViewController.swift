@@ -19,7 +19,7 @@ class EmojiCollectionViewController: UIViewController {
     private let viewModel = EmojiCollectionViewModel()
     
     private lazy var addEmojiButton: ButtonComponent = {
-        let button = ButtonComponent(token: viewModel.token, receiveState: false)
+        let button = ButtonComponent(token: viewModel.token)
         button.title = "Add"
         button.action = { sender in
             if let emoji = EmojiHelper.emoji() {
@@ -30,7 +30,7 @@ class EmojiCollectionViewController: UIViewController {
     }()
     
     private lazy var removeEmojiButton: ButtonComponent = {
-        let button = ButtonComponent(token: viewModel.token, receiveState: false)
+        let button = ButtonComponent(token: viewModel.token)
         button.title = "Remove"
         button.action = { sender in
             let section = Int(arc4random()%3)
@@ -42,7 +42,7 @@ class EmojiCollectionViewController: UIViewController {
     }()
     
     private lazy var suffleEmojiButton: ButtonComponent = {
-        let button = ButtonComponent(token: viewModel.token, receiveState: false)
+        let button = ButtonComponent(token: viewModel.token)
         button.title = "Shuffle"
         button.action = { sender in
             sender.dispatch(action: ShuffleEmojiAction())
@@ -97,7 +97,9 @@ class EmojiCollectionViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
-
+    deinit {
+        viewModel.deinitialize()
+    }
 }
 
 extension EmojiCollectionViewController {

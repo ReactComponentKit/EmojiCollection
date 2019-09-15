@@ -1,15 +1,14 @@
 //
-//  RemoveEmojiAction.swift
+//  LogToConsole.swift
 //  EmojiCollectionApp
 //
 //  Created by burt on 2018. 8. 26..
 //  Copyright © 2018년 Burt.K. All rights reserved.
 //
 
-import Foundation
 import ReactComponentKit
 
-struct RemoveEmojiAction: Action {
-    let section: Int
-    let index: Int
+func logAction(action: Action) -> Action {
+    print("[## LOGGING ##] action: \(type(of: action).name)")
+    return action
 }

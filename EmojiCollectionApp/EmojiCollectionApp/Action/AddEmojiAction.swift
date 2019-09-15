@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import BKRedux
+import ReactComponentKit
 
 struct AddEmojiAction: Action {
     let section: Int

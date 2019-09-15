@@ -7,13 +7,10 @@
 //
 
 import RxSwift
-import BKRedux
 import ReactComponentKit
 
-func makeEmojiSectionModel(state: State, action: Action) -> Observable<State> {
-    guard let emojiCollectionState = state as? EmojiCollectionState else { return .just(state) }
-    
-    let emojiGroupList = emojiCollectionState.emoji
+func makeCollectionViewSectionModels(state: EmojiCollectionState) -> EmojiCollectionState {
+    let emojiGroupList = state.emoji
     let sections = emojiGroupList.enumerated().map { (groupIndex, emojiGroup) -> DefaultSectionModel in
         
         let emojiBoxModels = emojiGroup.map({ (emoji) -> EmojiBoxModel in
@@ -28,7 +25,5 @@ func makeEmojiSectionModel(state: State, action: Action) -> Observable<State> {
         
     }
     
-    var newState = emojiCollectionState
-    newState.sections = sections
-    return .just(newState)
+    return state.copy { $0.sections = sections }
 }
